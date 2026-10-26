@@ -1,22 +1,12 @@
 import time 
 import random 
+import attacksequence 
+import sys  
 def pick_loot(pool): 
     listofi = pool.split(',') 
     a = len(listofi) - 1 
     index = random.randint(0, a)
-    return listofi[index]
-def remove_num(string): 
-    string.replace("0","") 
-    string.replace("1","") 
-    string.replace("2","") 
-    string.replace("3","") 
-    string.replace("4","") 
-    string.replace("5","") 
-    string.replace("6","") 
-    string.replace("7","") 
-    string.replace("8","") 
-    string.replace("9","") 
-    string.replace("-","")  
+    return listofi[index]  
 def makeinv(list): 
     printing = ''
     for item in list: 
@@ -30,8 +20,8 @@ mhp = {'zombie' : 5}
 mattack = {'zombie' : 2} 
 #monster display name 
 mdisplay = {'zombie' : 'Zombie'}
-mloot = {'zombie' : 'health_potion, '} 
-mac = {'zombie' : 5}
+mloot = {'zombie' : "health_potion"} 
+mac = {'zombie' : 2}
 class Item: 
     def __init__(self, name, amount, cons, heal): 
         self.amount = amount 
@@ -39,7 +29,8 @@ class Item:
         self.consumable = cons 
         self.heal = heal
 health_potion = Item(name='Health Potion', amount = 5, cons=True, heal=10) 
-stick = Item(name='stick', amount=1, cons=False, heal=0)
+stick = Item(name='stick', amount=1, cons=False, heal=0) 
+classtoname = {'health_potion': health_potion, 'stick' : stick}
 class Player: 
     def __init__(self): 
         self.maxhp = 20 
@@ -59,6 +50,7 @@ class Monster:
     def __init__(self, type, weapon): 
         #display name 
         self.d_name = mdisplay[type] 
+        self.maxhp = mhp[type] 
         self.hp = mhp[type] 
         self.mattack = mattack[type]
         #attick minimum of weapon for random
@@ -66,8 +58,10 @@ class Monster:
         #attick maximum of weapon for random
         self.amax = wmax[weapon] 
         self.attack = self.mattack + random.randint(self.amin, self.amax) 
-        self.mloot = pick_loot(mloot[type]) 
-        self.mac = mac[type]
+        self.mloot = classtoname[pick_loot(mloot[type])] 
+        self.mac = mac[type]  
+
+
  
 
 
