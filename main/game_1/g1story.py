@@ -2,27 +2,50 @@ import time
 import random 
 import attacksequence 
 import sys 
-import g1main 
-def run():
+import g1main  
+from g1main import Monster 
+from g1main import Player 
+from g1main import Item  
+from g1main import classtoname
+import threading 
+import asyncio 
+locker = threading.Lock()
+def slowtype(string): 
+    for letter in string:
+        print(letter, end="", flush=True)
+        time.sleep(0.1)
+    print('')
+         
+def player_ticker(player_obj): 
     while True: 
-        print('Start Game [S] /nExit Game [E]') 
+        player_obj.update()  
+        time.sleep(0.05)
+def story_run(): 
+    while True: 
+        slowtype('Start Game [S] \nExit Game [E]') 
         schoice = input('Choice: ').lower() 
         dead = False 
-        if schoice == 's': 
+        if schoice == 's':
+            z = 2
             zombie = Monster('zombie', 'na')  
             player = Player() 
-
+            ticker_thread = threading.Thread(target=player_ticker, args=(player,), daemon=True)
+            ticker_thread.start()
             while True: 
-                print('Hello Adventurer What is your name?') 
-                player.name = input("Name: ") 
-                print('You find yourself in a musty dungeon with moss covered walls.') 
-                print(f'You remeber now, {player.name}, that monster kidnapped your sister. ') 
-                print('You must find her!') 
-                input('Press [Enter] to continue') 
-                print('\n'*30)
-                print('Alas a zombie has appeared!')
-                attacksequence.aseq(player, zombie) 
+                if z == '1':
+                    slowtype('Hello Adventurer What is your name?') 
+                    player.name = input("Name: ").title() 
+                    slowtype('You find yourself in a musty dungeon with moss covered walls.') 
+                    slowtype(f'You remeber now, {player.name}, that monster kidnapped your sister. ') 
+                    slowtype('You must find her!') 
+                    input('Press [Enter] to continue') 
+                    print('\n'*30)
+                    slowtype('Alas a zombie has appeared!')
+                attacksequence.aseq(player, zombie, classtoname) 
 
+                player.update()  
+
+                attacksequence.aseq(player, zombie, classtoname)
         if dead == True: 
             break  
                 
@@ -30,4 +53,4 @@ def run():
         if schoice == "e": 
             sys.exit() 
 
-run()
+story_run()

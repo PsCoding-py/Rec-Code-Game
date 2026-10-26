@@ -1,5 +1,14 @@
 import time 
 import random 
+import threading 
+import asyncio 
+def slowtype(string): 
+    for letter in string:
+        print(letter, end="", flush=True)
+        time.sleep(0.1) 
+    print('') 
+
+     
 def remove_num(string): 
     string.replace("0","") 
     string.replace("1","") 
@@ -13,72 +22,97 @@ def remove_num(string):
     string.replace("9","") 
     string.replace("-","") 
     string.replace(' ','') 
-
-def aseq(player, monster): 
-    turn = 0  
-    while True:
+# Attack sequence function 
+def add_item(player, item):
+    pinv = player.inventory 
+    if item.truename in pinv: 
+        item.amount += 1 
+    elif f'' in pinv: 
+        item.amount += 1  
+        a = pinv.index(f'') 
+        pinv[a] = item.truename
+        
+locker = threading.Lock()       
+def aseq(player, monster, classtoname): 
+    turn = 0 
+    #main loop 
+    done = False  
+    while True: 
+        global choice, slot 
+        #player turn
         while True:  
-            print(f'{player.name} vs. {monster.d_name}')
-            print(f"{player.name}'s Turn") 
+            slowtype(f'{player.name} vs. {monster.d_name}')
+            slowtype(f"{player.name}'s Turn") 
             print(f"{monster.hp}/{monster.maxhp}")
             print(f"{player.hp}/{player.maxhp}") 
-            print(f'{player.inventory}') 
+            print(f'{player.d_inventory}') 
             print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')  
             choice = input('Choice: ').lower()
             if choice == 'a': 
                 aroll = random.randint(1,20) 
                 if aroll > monster.mac: 
-                    print(f'You hit the {monster.d_name} and dealt {player.attack} damage') 
-                    monster.hp -= player.attack
+                    z = player.attack 
+                    slowtype(f'You hit the {monster.d_name} and dealt {z} damage') 
+                    monster.hp -= z
                 elif aroll < monster.mac: 
-                    print(f'You missed the {monster.d_name}') 
+                    slowtype(f'You missed the {monster.d_name}') 
             if choice == 'h': 
                 while True:  
                     try:
                         print(player.d_inventory)
-                        slot = int(input('Slot: ')) - 1  
-                        item = player.inventory[slot] 
-                        item = remove_num(item) 
+                        with locker: 
+                            slot =  int(input('Slot: '))
+                        item = player.inventory[slot]  
                         item = classtoname[item] 
-                    except: 
-                        print('Please enter a valid intiger')
-                    
-                    if slot <= 6 and slot >= 0: 
-                        if item.cons == True:   
-                            player.hp += item.heal 
-                            item.amount -= 1 
-                    else: 
-                        print('Please enter a value from 1-7') 
+                        if slot <= 6 and slot >= 0: 
+                            if item.cons == True:   
+                                player.hp += item.heal 
+                                item.amount -= 1 
+                        break 
+                    except SyntaxError: 
+                        pass
+        #monster turn 
             break 
+        if monster.hp <= 0 and done != True: 
+            slowtype(f"You have defeated the {monster.d_name}") 
+            slowtype(f"You got a {monster.mloot.name}") 
+            loot = monster.mloot 
+            add_item(player, loot) 
+            player.update() 
+            slowtype(player.d_inventory) 
+            done != True
+            break
+        elif player.hp <= 0: 
+            slowtype('YOU DIED!') 
+            global dead 
+            dead = True
+            break
         while True: 
-            print(f'{player.name} vs. {monster.d_name}')
-            print(f"{player.name}'s Turn") 
+            slowtype(f'{monster.d_name} vs. {player.name}')
+            slowtype(f"{monster.d_name}'s Turn") 
             print(f"{monster.hp}/{monster.maxhp}")
             print(f"{player.hp}/{player.maxhp}") 
             aroll = random.randint(1,20) 
             if aroll > player.ac: 
-                print(f'The {monster.d_name} hit you and dealt {monster.attack} damage') 
+                slowtype(f'The {monster.d_name} hit you and dealt {monster.attack} damage') 
                 player.hp -= monster.attack
             elif aroll < player.ac: 
-                print(f'The {monster.d_name} missed you') 
-            break
-        if monster.hp <= 0: 
-            print(f"You have defeated the {monster.d_name}") 
-            print(f"You got a {monster.mloot.name}") 
+                slowtype(f'The {monster.d_name} missed you') 
+            break 
+        #check if player or zombie is dead
+        if monster.hp <= 0 and done != True: 
+            slowtype(f"You have defeated the {monster.d_name}") 
+            slowtype(f"You got a {monster.mloot.name}") 
             loot = monster.mloot 
-            if monster.mloot.name in player.inventory:
-                loot = monster.mloot 
-                loot.amount += 1  
-            else: 
-                if f'' in player.inventory: 
-                    ind = player.inventory.index(f'') 
-                    player.inventory[ind] = loot.name + '-' + str(loot.amount) 
+            add_item(player, loot) 
+            player.update() 
+            slowtype(player.d_inventory)
             break
         elif player.hp <= 0: 
-            print('YOU DIED!') 
-            global dead 
+            slowtype('YOU DIED!')  
             dead = True
-            break
+            break 
+        
                     
 
                              
