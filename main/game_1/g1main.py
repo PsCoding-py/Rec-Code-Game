@@ -1,5 +1,10 @@
 import time 
 import random 
+def pick_loot(pool): 
+    listofi = pool.split(',') 
+    a = len(listofi) - 1 
+    index = random.randint(0, a)
+    return listofi[index]
 def remove_num(string): 
     string.replace("0","") 
     string.replace("1","") 
@@ -25,12 +30,16 @@ mhp = {'zombie' : 5}
 mattack = {'zombie' : 2} 
 #monster display name 
 mdisplay = {'zombie' : 'Zombie'}
+mloot = {'zombie' : 'health_potion, '} 
+mac = {'zombie' : 5}
 class Item: 
-    def __init__(self, name, amount): 
+    def __init__(self, name, amount, cons, heal): 
         self.amount = amount 
-        self.name = name 
-health_potion = Item(name='Health Potion', amount = 5) 
-stick = Item(name='stick', amount=1)
+        self.name = name  
+        self.consumable = cons 
+        self.heal = heal
+health_potion = Item(name='Health Potion', amount = 5, cons=True, heal=10) 
+stick = Item(name='stick', amount=1, cons=False, heal=0)
 class Player: 
     def __init__(self): 
         self.maxhp = 20 
@@ -43,7 +52,8 @@ class Player:
         self.amax = wmax[self.weapon] 
         #minimum damage is 3 with no weapon
         self.attack = 3 + random.randint(self.amin, self.amax) 
-        self.d_inventory = f'Inventory: \n{makeinv(self.inventory)}'  
+        self.d_inventory = f'Inventory: \n{makeinv(self.inventory)}' 
+        self.ac = 15  
         self.name = ''
 class Monster: 
     def __init__(self, type, weapon): 
@@ -55,7 +65,9 @@ class Monster:
         self.amin = wmin[weapon]  
         #attick maximum of weapon for random
         self.amax = wmax[weapon] 
-        self.attack = self.mattack + random.randint(self.amin, self.amax)  
+        self.attack = self.mattack + random.randint(self.amin, self.amax) 
+        self.mloot = pick_loot(mloot[type]) 
+        self.mac = mac[type]
  
 
 
