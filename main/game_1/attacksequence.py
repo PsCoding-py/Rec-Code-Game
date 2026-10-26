@@ -38,6 +38,7 @@ def aseq(player, monster):
                     except: 
                         print('Please enter a valid intiger')
                     if slot <= 7 and slot >= 0: 
+                        player.inventory
                         
                     
 
