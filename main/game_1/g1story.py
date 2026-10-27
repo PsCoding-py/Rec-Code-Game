@@ -39,7 +39,7 @@ def story_run():
                     input('Press [Enter] to continue') 
                     print('\n'*30)
                     slowtype('Alas a zombie has appeared!')
-                attacksequence.aseq(player, zombie, classtoname) 
+                print(attacksequence.aseq(player, zombie, classtoname)) 
 
                 player.update()  
         if dead == True: 

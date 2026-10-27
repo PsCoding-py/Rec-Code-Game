@@ -46,8 +46,10 @@ def add_item(player, item):
 locker = threading.Lock()       
 def aseq(player, monster, classtoname): 
     turn = 0 
+    a=1 
     #main loop 
-    done = False  
+    done = False 
+    md = False  
     while True: 
         global choice, slot 
         #player turn
@@ -57,6 +59,7 @@ def aseq(player, monster, classtoname):
             print(f"{monster.hp}/{monster.maxhp}")
             print(f"{player.hp}/{player.maxhp}") 
             print(f'{player.d_inventory}') 
+            print(f'Player has {classtoname[player.weapon].name} equipped as main weapon') 
             print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')  
             choice = input('Choice: ').lower()
             if choice == 'a': 
@@ -92,20 +95,51 @@ def aseq(player, monster, classtoname):
                 print(player.d_inventory) 
                 try:
                     choslot = int(input('Choose a slot: ')) 
+                    pinv = player.inventory 
+                    witem = pinv[choslot] 
+                    if witem.wep == True: 
+                        player.weapon = witem 
+                        break 
+                    else: 
+                        print('That item is not equippable as a weapon')
                      
                 except: 
-                    print('Please enter a valid value (1-7), if you have an error has occured')
-        #monster turn 
+                    print('Please enter a valid value (1-7), if you have an error has occured') 
+            if choice == 'c':
+                print('Change inventory: ') 
+                print('Drop Item [D]') 
+                print('Move Item Slot [M]') 
+                print('Drop All of Item [A]') 
+                cchoice = input('Decision: ').lower() 
+                if cchoice == 'd': 
+                    try: 
+                        print(player.d_inventory) 
+                        print('Choose a Slot') 
+                        cdslot = int(input('Slot: ')) - 1
+                        cditem = classtoname[player.inventory[cdslot]]  
+                        cditem.amount -= 1
+                        if cditem.amount == 0: 
+                            player.inventory[cdslot] = f'' 
+                            player.update()  
+
+                    except:
+                        print('Please enter a valid number (1-7), if you have entered a valid number an error has occured.')
+                
+
+        #monster turn()
             break 
-        if monster.hp <= 0 and done != True: 
+        if monster.hp <= 0: 
+            md = True 
             slowtype(f"You have defeated the {monster.d_name}") 
             slowtype(f"You got a {monster.mloot.name}") 
             loot = monster.mloot 
             add_item(player, loot) 
             player.update() 
-            slowtype(player.d_inventory) 
-            done != True
-            break
+            print(player.d_inventory) 
+            done != True 
+            print('finis')
+            break 
+            print('finis')
         elif player.hp <= 0: 
             slowtype('YOU DIED!') 
             global dead 
@@ -124,18 +158,25 @@ def aseq(player, monster, classtoname):
                 slowtype(f'The {monster.d_name} missed you') 
             break 
         #check if player or zombie is dead
-        if monster.hp <= 0 and done != True: 
+        if monster.hp <= 0: 
+            md = True 
             slowtype(f"You have defeated the {monster.d_name}") 
             slowtype(f"You got a {monster.mloot.name}") 
             loot = monster.mloot 
             add_item(player, loot) 
             player.update() 
-            slowtype(player.d_inventory)
-            break
+            print(player.d_inventory)
+            print('finis') 
+            break 
+            print('finis')
         elif player.hp <= 0: 
             slowtype('YOU DIED!')  
             dead = True
-            break  
+            break   
+        if md == True: 
+            break 
+    return 'Broken' 
+        
         
                     
 
