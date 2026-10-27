@@ -29,6 +29,7 @@ def story_run():
             z = 2
             zombie = Monster('zombie', 'na')  
             player = Player() 
+            jim = Monster('jim', 'na') 
             while True: 
                 if z == '1':
                     slowtype('Hello Adventurer What is your name?') 
@@ -40,6 +41,7 @@ def story_run():
                     print('\n'*30)
                     slowtype('Alas a zombie has appeared!')
                 print(attacksequence.aseq(player, zombie, classtoname)) 
+                print(attacksequence.aseq(player, jim, classtoname)) 
 
                 player.update()  
         if dead == True: 

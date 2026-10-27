@@ -104,7 +104,7 @@ def aseq(player, monster, classtoname):
                         print('That item is not equippable as a weapon')
                      
                 except: 
-                    print('Please enter a valid value (1-7), if you have an error has occured') 
+                    print('Please enter a valid slot number (1-7), if you have an error has occured') 
             if choice == 'c':
                 print('Change inventory: ') 
                 print('Drop Item [D]') 
@@ -123,7 +123,21 @@ def aseq(player, monster, classtoname):
                             player.update()  
 
                     except:
-                        print('Please enter a valid number (1-7), if you have entered a valid number an error has occured.')
+                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
+                if cchoice == 'a': 
+                    try: 
+                        print(player.d_inventory) 
+                        print('Choose a Slot') 
+                        cdslot = int(input('Slot: ')) - 1
+                        cditem = classtoname[player.inventory[cdslot]]  
+                        cditem.amount = 0
+                        if cditem.amount == 0: 
+                            player.inventory[cdslot] = f'' 
+                            player.update()  
+
+                    except:
+                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
+
                 
 
         #monster turn()
@@ -137,9 +151,9 @@ def aseq(player, monster, classtoname):
             player.update() 
             print(player.d_inventory) 
             done != True 
-            print('finis')
+            
             break 
-            print('finis')
+            
         elif player.hp <= 0: 
             slowtype('YOU DIED!') 
             global dead 
@@ -166,9 +180,9 @@ def aseq(player, monster, classtoname):
             add_item(player, loot) 
             player.update() 
             print(player.d_inventory)
-            print('finis') 
+             
             break 
-            print('finis')
+            
         elif player.hp <= 0: 
             slowtype('YOU DIED!')  
             dead = True

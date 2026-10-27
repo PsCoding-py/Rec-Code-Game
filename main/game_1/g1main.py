@@ -20,13 +20,13 @@ def pick_loot(pool):
 wmax = {'stick' : 3 ,'na' : 0} 
 wmin = {'stick' : 1, 'na' : 0 }
 # monster hp dict
-mhp = {'zombie' : 5} 
+mhp = {'zombie' : 5, 'jim' : 6} 
 #monster attack points dict 
-mattack = {'zombie' : 2} 
+mattack = {'zombie' : 2, 'jim' : 2} 
 #monster display name 
-mdisplay = {'zombie' : 'Zombie'}
-mloot = {'zombie' : "health_potion"} 
-mac = {'zombie' : 2} 
+mdisplay = {'zombie' : 'Zombie', 'jim' : 'Jim'}
+mloot = {'zombie' : "health_potion", 'jim' : 'stick'} 
+mac = {'zombie' : 2, 'jim' : 2} 
 #Classes
 #
 #
