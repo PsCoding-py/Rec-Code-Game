@@ -29,8 +29,6 @@ def story_run():
             z = 2
             zombie = Monster('zombie', 'na')  
             player = Player() 
-            ticker_thread = threading.Thread(target=player_ticker, args=(player,), daemon=True)
-            ticker_thread.start()
             while True: 
                 if z == '1':
                     slowtype('Hello Adventurer What is your name?') 
@@ -44,8 +42,6 @@ def story_run():
                 attacksequence.aseq(player, zombie, classtoname) 
 
                 player.update()  
-
-                attacksequence.aseq(player, zombie, classtoname)
         if dead == True: 
             break  
                 

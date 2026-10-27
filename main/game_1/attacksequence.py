@@ -30,7 +30,18 @@ def add_item(player, item):
     elif f'' in pinv: 
         item.amount += 1  
         a = pinv.index(f'') 
-        pinv[a] = item.truename
+        pinv[a] = item.truename 
+    else: 
+        print('No space in inventory choose an item to swap out or exit.') 
+        cforso = input('Swap out [S] or Drop Item [D]').lower()
+        if cforso == 's': 
+            print(player.d_inventory) 
+            try: 
+                cas = int(input('Choose a slot: ')) 
+                player.inventory[cas] = item.truename 
+                item.amount += 1 
+            except: 
+                print('Enter a valid value (1-7), if you have entered a valid value an error has occured') 
         
 locker = threading.Lock()       
 def aseq(player, monster, classtoname): 
@@ -54,23 +65,36 @@ def aseq(player, monster, classtoname):
                     z = player.attack 
                     slowtype(f'You hit the {monster.d_name} and dealt {z} damage') 
                     monster.hp -= z
-                elif aroll < monster.mac: 
+                elif aroll <= monster.mac: 
                     slowtype(f'You missed the {monster.d_name}') 
             if choice == 'h': 
                 while True:  
                     try:
-                        print(player.d_inventory)
-                        with locker: 
-                            slot =  int(input('Slot: '))
-                        item = player.inventory[slot]  
+                        print(player.d_inventory) 
+                        slot =  int(input('Slot: ')) - 1  
+                        item = player.inventory[slot] 
+                        print(item)  
                         item = classtoname[item] 
                         if slot <= 6 and slot >= 0: 
                             if item.cons == True:   
                                 player.hp += item.heal 
                                 item.amount -= 1 
-                        break 
-                    except SyntaxError: 
-                        pass
+                                print(f'You healed {item.heal} damage.') 
+                                player.update() 
+                                break 
+                            else: 
+                                print('This item is not consumeable') 
+                         
+                    except: 
+                        print('Please enter a valid value (1-7), if you have an error has occured') 
+            if choice == 'w': 
+                print('Choose a Weapon') 
+                print(player.d_inventory) 
+                try:
+                    choslot = int(input('Choose a slot: ')) 
+                     
+                except: 
+                    print('Please enter a valid value (1-7), if you have an error has occured')
         #monster turn 
             break 
         if monster.hp <= 0 and done != True: 
@@ -96,7 +120,7 @@ def aseq(player, monster, classtoname):
             if aroll > player.ac: 
                 slowtype(f'The {monster.d_name} hit you and dealt {monster.attack} damage') 
                 player.hp -= monster.attack
-            elif aroll < player.ac: 
+            elif aroll <= player.ac: 
                 slowtype(f'The {monster.d_name} missed you') 
             break 
         #check if player or zombie is dead
@@ -111,7 +135,7 @@ def aseq(player, monster, classtoname):
         elif player.hp <= 0: 
             slowtype('YOU DIED!')  
             dead = True
-            break 
+            break  
         
                     
 

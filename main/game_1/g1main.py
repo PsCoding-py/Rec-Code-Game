@@ -33,15 +33,16 @@ mac = {'zombie' : 2}
 #
 #
 class Item: 
-    def __init__(self, name, amount, cons, heal, truename): 
+    def __init__(self, name, amount, cons, heal, truename, wep): 
         self.amount = amount 
         self.name = name  
-        self.consumable = cons 
+        self.cons = cons 
         self.heal = heal 
-        self.truename = truename
+        self.truename = truename 
+        self.wep = wep
 #Define Items
-health_potion = Item(name='Health Potion', amount = 0, cons=True, heal=10, truename='health_potion') 
-stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick') 
+health_potion = Item(name='Health Potion', amount = 0, cons=True, heal=10, truename='health_potion', wep=False) 
+stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True) 
 ###Important###
 # 
 # 
@@ -93,7 +94,9 @@ class Player:
                 if obj.amount <= 0: 
                     classtoname[item] = f''
             else: 
-                pass
+                pass 
+        if self.hp > self.maxhp: 
+            self.hp = self.maxhp
 
 class Monster: 
     def __init__(self, type, weapon): 
