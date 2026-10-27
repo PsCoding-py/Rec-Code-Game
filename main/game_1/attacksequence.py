@@ -110,6 +110,7 @@ def aseq(player, monster, classtoname):
                 print('Drop Item [D]') 
                 print('Move Item Slot [M]') 
                 print('Drop All of Item [A]') 
+                print('Replace Item [R]') 
                 cchoice = input('Decision: ').lower() 
                 if cchoice == 'd': 
                     try: 
@@ -128,15 +129,35 @@ def aseq(player, monster, classtoname):
                     try: 
                         print(player.d_inventory) 
                         print('Choose a Slot') 
-                        cdslot = int(input('Slot: ')) - 1
-                        cditem = classtoname[player.inventory[cdslot]]  
-                        cditem.amount = 0
-                        if cditem.amount == 0: 
-                            player.inventory[cdslot] = f'' 
+                        caslot = int(input('Slot: ')) - 1
+                        caitem = classtoname[player.inventory[caslot]]  
+                        caitem.amount = 0
+                        if caitem.amount == 0: 
+                            player.inventory[caslot] = f'' 
                             player.update()  
 
                     except:
                         print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
+                if cchoice == 'm': 
+                    try: 
+                        print(player.d_inventory) 
+                        print('Choose the Slot of the item you want to move') 
+                        cmmove = int(input('Slot: ')) - 1 
+                        print('Choose the slot you want to move the item to') 
+                        while True:  
+                                cmtarget = int(input('Slot')) - 1  
+                                if player.inventory[cmtarget] == f'': 
+                                    break 
+                                else: 
+                                    print('Enter a Slot with a ')
+
+
+                        cmitem = classtoname[player.inventory[cmmove]]  
+                        player.inventory[cmmove] = f'' 
+
+
+                    except:
+                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')  
 
                 
 
