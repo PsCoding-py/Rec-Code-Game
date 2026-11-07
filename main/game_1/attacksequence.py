@@ -59,7 +59,7 @@ def aseq(player, monster, classtoname):
             print(f"{monster.hp}/{monster.maxhp}")
             print(f"{player.hp}/{player.maxhp}") 
             print(f'{player.d_inventory}') 
-            print(f'Player has {classtoname[player.weapon].name} equipped as main weapon') 
+            print(f'Player has {player.weapondn} equipped as main weapon') 
             print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')  
             choice = input('Choice: ').lower()
             if choice == 'a': 
@@ -69,7 +69,8 @@ def aseq(player, monster, classtoname):
                     slowtype(f'You hit the {monster.d_name} and dealt {z} damage') 
                     monster.hp -= z
                 elif aroll <= monster.mac: 
-                    slowtype(f'You missed the {monster.d_name}') 
+                    slowtype(f'You missed the {monster.d_name}')
+                break 
             if choice == 'h': 
                 while True:  
                     try:
@@ -90,7 +91,9 @@ def aseq(player, monster, classtoname):
                          
                     except: 
                         print('Please enter a valid value (1-7), if you have an error has occured') 
-            if choice == 'w': 
+                break
+            if choice == 'w':
+                 
                 print('Choose a Weapon') 
                 print(player.d_inventory) 
                 try:
@@ -98,7 +101,7 @@ def aseq(player, monster, classtoname):
                     pinv = player.inventory 
                     witem = pinv[choslot] 
                     if witem.wep == True: 
-                        player.weapon = witem 
+                        player.weapon = classtoname[witem] 
                         break 
                     else: 
                         print('That item is not equippable as a weapon')
@@ -114,14 +117,15 @@ def aseq(player, monster, classtoname):
                 cchoice = input('Decision: ').lower() 
                 if cchoice == 'd': 
                     try: 
-                        print(player.d_inventory) 
+                        print(player.d_inventory)  
                         print('Choose a Slot') 
                         cdslot = int(input('Slot: ')) - 1
                         cditem = classtoname[player.inventory[cdslot]]  
                         cditem.amount -= 1
                         if cditem.amount == 0: 
                             player.inventory[cdslot] = f'' 
-                            player.update()  
+                            player.update()
+                        break  
 
                     except:
                         print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
@@ -134,7 +138,8 @@ def aseq(player, monster, classtoname):
                         caitem.amount = 0
                         if caitem.amount == 0: 
                             player.inventory[caslot] = f'' 
-                            player.update()  
+                            player.update()
+                        break  
 
                     except:
                         print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
@@ -142,27 +147,29 @@ def aseq(player, monster, classtoname):
                     try: 
                         print(player.d_inventory) 
                         print('Choose the Slot of the item you want to move') 
-                        cmmove = int(input('Slot: ')) - 1 
+                        cmmove = int(input('Slot: ')) - 1  
                         print('Choose the slot you want to move the item to') 
-                        while True:  
+                        while True: 
+                                print(player.d_inventory)  
                                 cmtarget = int(input('Slot')) - 1  
                                 if player.inventory[cmtarget] == f'': 
                                     break 
                                 else: 
-                                    print('Enter a Slot with a ')
-
-
+                                    print('Enter an Empty Slot')
                         cmitem = classtoname[player.inventory[cmmove]]  
-                        player.inventory[cmmove] = f'' 
+                        player.inventory[cmmove] = f''
+                        break 
+
 
 
                     except:
-                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')  
+                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')
+            else: 
+                print('You have entered an invalid ')  
 
                 
 
-        #monster turn()
-            break 
+        #monster turn() 
         if monster.hp <= 0: 
             md = True 
             slowtype(f"You have defeated the {monster.d_name}") 

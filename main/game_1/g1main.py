@@ -17,8 +17,8 @@ def pick_loot(pool):
 # 
 # 
 #     
-wmax = {'stick' : 3 ,'na' : 0} 
-wmin = {'stick' : 1, 'na' : 0 }
+wmax = {'stick' : 3 ,'na' : 1} 
+wmin = {'stick' : 1, 'na' : 1 }
 # monster hp dict
 mhp = {'zombie' : 5, 'jim' : 6} 
 #monster attack points dict 
@@ -42,7 +42,8 @@ class Item:
         self.wep = wep
 #Define Items
 health_potion = Item(name='Health Potion', amount = 0, cons=True, heal=10, truename='health_potion', wep=False) 
-stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True) 
+stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True)
+hands = Item(name='hands', amount=0, cons=False, heal=0, truename='na', wep=True) 
 ###Important###
 # 
 # 
@@ -69,21 +70,25 @@ class Player:
     def __init__(self): 
         self.maxhp = 20 
         self.hp = 20 
-        self.weapon = 'stick' 
+        self.weapon = stick
+        self.weapondn = self.weapon.name 
+        self.weaponn = self.weapon.truename
         self.inventory = [f'stick', f'', f'', f'', f'', f'', f''] 
         #attick minimum of weapon for random 
-        self.amin = wmin[self.weapon]  
+        self.amin = wmin[self.weaponn]  
         #attick maximum of weapon for random
-        self.amax = wmax[self.weapon] 
+        self.amax = wmax[self.weaponn] 
         #minimum damage is 3 with no weapon
         self.attack = 3 + random.randint(self.amin, self.amax) 
         self.d_inventory = f'Inventory: \n{makeinv(self.inventory)}' 
         self.ac = 15  
         self.name = '' 
-    def update(self): 
-        self.amin = wmin[self.weapon]  
+    def hupdate(self): 
+        self.weapondn = self.weapon.name
+        self.weaponn = self.weapon.truename
+        self.amin = wmin[self.weaponn]  
         #attick maximum of weapon for random
-        self.amax = wmax[self.weapon] 
+        self.amax = wmax[self.weaponn] 
         #minimum damage is 3 with no weapon
         self.attack = 3 + random.randint(self.amin, self.amax) 
         self.d_inventory = f'Inventory: \n{makeinv(self.inventory)}' 
@@ -97,6 +102,11 @@ class Player:
                 pass 
         if self.hp > self.maxhp: 
             self.hp = self.maxhp
+        if self.weapon.amount == 0: 
+            self.weapon = hands
+    def update(self): 
+        self.hupdate() 
+        self.hupdate()
 
 class Monster: 
     def __init__(self, type, weapon): 
