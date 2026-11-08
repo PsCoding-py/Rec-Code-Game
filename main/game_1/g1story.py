@@ -9,6 +9,7 @@ from g1main import Item
 from g1main import classtoname
 import threading 
 import asyncio 
+import os
 locker = threading.Lock()
 def slowtype(string): 
     for letter in string:
@@ -24,7 +25,20 @@ def story_run():
     while True: 
         slowtype('Start Game [S] \nExit Game [E]') 
         schoice = input('Choice: ').lower() 
-        dead = False 
+        dead = False
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+        # Securely join that directory with your filename
+        u_path = os.path.join(script_dir, 'usernames.txt')
+        m_path = os.path.join(script_dir, 'milestones.txt') 
+        with open(u_path, 'r') as usernames:
+            ucontents = usernames.read()
+            ulist = ucontents.split(' ')
+
+        with open(m_path, 'r') as milestones: 
+            mcontents = milestones.read()
+            mlist = mcontents.split(' ')
+        u_m = dict(zip(mlist, ulist))
         if schoice == 's':
             z = 2
             zombie = Monster('zombie', 'na')  
