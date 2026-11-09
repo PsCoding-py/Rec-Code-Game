@@ -1,7 +1,8 @@
 import time 
 import random 
 import attacksequence 
-import sys 
+import sys
+import g1smods.py 
 import g1main  
 from g1main import Monster 
 from g1main import Player 
@@ -57,20 +58,6 @@ def story_run():
             player.inventory = u_i[username] 
             jim = Monster('jim', 'na') 
             while True:
-                def intro(): 
-                    if z == 1:
-                        slowtype('Hello Adventurer What is your name?') 
-                        player.name = input("Name: ").title() 
-                        slowtype('You find yourself in a musty dungeon with moss covered walls.') 
-                        slowtype(f'You remeber now, {player.name}, that monster kidnapped your sister. ') 
-                        slowtype('You must find her!') 
-                        input('Press [Enter] to continue') 
-                        print('\n'*30)
-                        slowtype('Alas a zombie has appeared!')
-                    
-                    print(attacksequence.aseq(player, zombie, classtoname)) 
-                    print(attacksequence.aseq(player, jim, classtoname))
-                intro()
                 break
                  
 

@@ -17,16 +17,16 @@ def pick_loot(pool):
 # 
 # 
 #     
-wmax = {'stick' : 3 ,'na' : 1} 
-wmin = {'stick' : 1, 'na' : 1 }
+wmax = {'stick' : 3 ,'na' : 1, 'sword' : 5} 
+wmin = {'stick' : 1, 'na' : 1, 'sword' : 2}
 # monster hp dict
-mhp = {'zombie' : 5, 'jim' : 6} 
+mhp = {'zombie' : 5, 'skeleton' : 6} 
 #monster attack points dict 
-mattack = {'zombie' : 2, 'jim' : 2} 
+mattack = {'zombie' : 2, 'skeleton' : 2} 
 #monster display name 
-mdisplay = {'zombie' : 'Zombie', 'jim' : 'Jim'}
-mloot = {'zombie' : "health_potion", 'jim' : 'stick'} 
-mac = {'zombie' : 2, 'jim' : 2} 
+mdisplay = {'zombie' : 'Zombie', 'skeleton' : 'Skeleton'}
+mloot = {'zombie' : "health_potion", 'skeleton' : 'sword'} 
+mac = {'zombie' : 2, 'skeleton' : 2} 
 #Classes
 #
 #
@@ -43,7 +43,8 @@ class Item:
 #Define Items
 health_potion = Item(name='Health Potion', amount = 0, cons=True, heal=10, truename='health_potion', wep=False) 
 stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True)
-hands = Item(name='hands', amount=0, cons=False, heal=0, truename='na', wep=True) 
+hands = Item(name='hands', amount=0, cons=False, heal=0, truename='na', wep=True)
+sword = Item(name='Sword', amount=0, cons=False, heal=0, truename='sword', wep=True) 
 ###Important###
 # 
 # 
@@ -52,7 +53,7 @@ hands = Item(name='hands', amount=0, cons=False, heal=0, truename='na', wep=True
 # 
 #  
 global classtoname 
-classtoname = {'health_potion': health_potion, 'stick' : stick} 
+classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword', sword} 
 #Classes Continue 
 # 
 # 
