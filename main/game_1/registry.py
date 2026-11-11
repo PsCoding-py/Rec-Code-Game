@@ -10,6 +10,10 @@ from g1main import classtoname
 import threading 
 import asyncio 
 import os
+def change_mile(mile):
+    with open('milestones.txt'): 
+         
+    
 def add_item(player, item):
     pinv = player.inventory 
     if item.truename in pinv: 
