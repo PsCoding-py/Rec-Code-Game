@@ -12,6 +12,7 @@ import threading
 import asyncio 
 import os
 import registry
+from registry import dead
 locker = threading.Lock()
 def slowtype(string): 
     for letter in string:

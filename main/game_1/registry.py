@@ -23,30 +23,46 @@ def slowtype(string):
         print(letter, end="", flush=True)
         time.sleep(0.1)
     print('')
-zombie = Monster('zombie', 'na')  
-player = Player()
-skeleton = Monster('skeleton', 'stick')
 def lor(): 
     while True:
         slowtype('Left [L] Or Right [R]')
-        c = input('> ').lower()
-        if c == 'l': 
+        _c = input('> ').lower()
+        if _c == 'l': 
             return 'l'
-        elif c == 'r': 
+        elif _c == 'r': 
             return 'r'
         else: 
             print('Invalid Answer Please enter [L] or [R]')
 def riddleq(riddle, answer):
-    a  = 0
-    while a != 3: 
+    _a  = 0
+    while _a != 3: 
         slowtype(riddle)
-        ans = input('What is the answer: ').lower()
-        if answer.lower() == ans: 
+        _ans = input('What is the answer: ').lower()
+        if answer.lower() == _ans: 
             return 1
         else: 
             print('Wrong')
-            a += 1 
-            print(f'{3-a} guesses left')
+            _a += 1 
+            print(f'{3-_a} guesses left')
     print('No guesses left')
     return 0
+#Objects And Variables
+
+
+
+
+
+
+#
+#Objects
+zombie = Monster('zombie', 'na')  
+player = Player()
+skeleton = Monster('skeleton', 'stick')
+health_potion = Item(name='Health Potion', amount = 0, cons=True, heal=10, truename='health_potion', wep=False) 
+stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True)
+hands = Item(name='hands', amount=0, cons=False, heal=0, truename='na', wep=True)
+sword = Item(name='Sword', amount=0, cons=False, heal=0, truename='sword', wep=True)
+#Variables
+dead = False
+keys = 0
     
