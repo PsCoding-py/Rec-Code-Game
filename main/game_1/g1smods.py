@@ -16,9 +16,9 @@ from registry import skeleton
 from registry import zombie
 from registry import slowtype
 #intro
-def mile_1():
-    z = 1 
-    if z == 1:
+def mile_1(mile):
+    mile = 1 
+    if mile == 1:
         slowtype('Hello Adventurer What is your name?') 
         player.name = input("Name: ").title() 
         slowtype('You find yourself in a musty dungeon with moss covered walls.') 
@@ -30,3 +30,6 @@ def mile_1():
                     
         print(attacksequence.aseq(player, zombie, classtoname)) 
         print(attacksequence.aseq(player, skeleton, classtoname))
+        mile = 2
+    if mile == 2: 
+        print('')

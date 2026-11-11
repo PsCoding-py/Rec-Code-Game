@@ -18,3 +18,13 @@ def slowtype(string):
 zombie = Monster('zombie', 'na')  
 player = Player()
 skeleton = Monster('skeleton', 'stick')
+def lor(): 
+    while True:
+        slowtype('Left [L] Or Right [R]')
+        c = input('> ').lower()
+        if c == 'l': 
+            return 'l'
+        elif c == 'r': 
+            return 'r'
+        else: 
+            print('Invalid Answer Please enter [L] or [R]')
