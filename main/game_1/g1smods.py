@@ -3,7 +3,6 @@ import time
 import random 
 import attacksequence 
 import sys
-import g1smods.py 
 import g1main  
 from g1main import Monster 
 from g1main import Player 
@@ -12,8 +11,13 @@ from g1main import classtoname
 import threading 
 import asyncio 
 import os
+from registry import player 
+from registry import skeleton 
+from registry import zombie
+from registry import slowtype
 #intro
-def mile_1(): 
+def mile_1():
+    z = 1 
     if z == 1:
         slowtype('Hello Adventurer What is your name?') 
         player.name = input("Name: ").title() 
@@ -25,5 +29,4 @@ def mile_1():
         slowtype('Alas a zombie has appeared!')
                     
         print(attacksequence.aseq(player, zombie, classtoname)) 
-        print(attacksequence.aseq(player, jim, classtoname))
-def
+        print(attacksequence.aseq(player, skeleton, classtoname))

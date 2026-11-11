@@ -60,7 +60,8 @@ def aseq(player, monster, classtoname):
             print(f"{player.hp}/{player.maxhp}") 
             print(f'{player.d_inventory}') 
             print(f'Player has {player.weapondn} equipped as main weapon') 
-            print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')  
+            print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')
+            print('Type [E] to exit any menu')  
             choice = input('Choice: ').lower()
             if choice == 'a': 
                 aroll = random.randint(1,20) 
@@ -78,7 +79,9 @@ def aseq(player, monster, classtoname):
                         slot =  int(input('Slot: ')) - 1  
                         item = player.inventory[slot] 
                         print(item)  
-                        item = classtoname[item] 
+                        item = classtoname[item]
+                        if slot == 'esc': 
+                            break 
                         if slot <= 6 and slot >= 0: 
                             if item.cons == True:   
                                 player.hp += item.heal 

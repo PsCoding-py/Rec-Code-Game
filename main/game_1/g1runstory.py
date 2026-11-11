@@ -2,7 +2,7 @@ import time
 import random 
 import attacksequence 
 import sys
-import g1smods.py 
+import g1smods 
 import g1main  
 from g1main import Monster 
 from g1main import Player 
@@ -11,6 +11,7 @@ from g1main import classtoname
 import threading 
 import asyncio 
 import os
+import registry
 locker = threading.Lock()
 def slowtype(string): 
     for letter in string:
@@ -31,7 +32,8 @@ def story_run():
     
         # Securely join that directory with your filename
         u_path = os.path.join(script_dir, 'usernames.txt')
-        m_path = os.path.join(script_dir, 'milestones.txt') 
+        m_path = os.path.join(script_dir, 'milestones.txt')
+        w_path = os.path.join(script_dir, 'pweapon.txt')
         with open(u_path, 'r') as usernames:
             ucontents = usernames.read()
             ulist = ucontents.split(' ')
@@ -46,18 +48,23 @@ def story_run():
             inlist = []
             for item in invs:  
                 plist = item.split(',')
-                inlist.append(plist) 
+                inlist.append(plist)
+        with open(w_path, 'r') as wepf: 
+            wcontents = wepf.read()
+            wlist = wcontents.split(' ') 
+
         u_m = dict(zip(ulist, mlist))
         u_i = dict(zip(ulist, inlist))
+        u_w = dict(zip(ulist, wlist))
         if schoice == 's':
             username = input('Username: ').lower()
 
             z = 2
             zombie = Monster('zombie', 'na')  
             player = Player()
-            player.inventory = u_i[username] 
-            jim = Monster('jim', 'na') 
+            player.inventory = u_i[username]  
             while True:
+                g1smods.mile_1()
                 break
                  
 

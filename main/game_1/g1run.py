@@ -9,5 +9,5 @@ from g1main import Item
 from g1main import classtoname
 import threading 
 import asyncio
-import g1story 
-g1story.story_run()
+import g1runstory 
+g1runstory.story_run()

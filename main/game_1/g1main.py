@@ -2,6 +2,7 @@ import time
 import random 
 import attacksequence 
 import sys 
+
 # Functions 
 # 
 # 
@@ -53,7 +54,7 @@ sword = Item(name='Sword', amount=0, cons=False, heal=0, truename='sword', wep=T
 # 
 #  
 global classtoname 
-classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword', sword} 
+classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword': sword} 
 #Classes Continue 
 # 
 # 
