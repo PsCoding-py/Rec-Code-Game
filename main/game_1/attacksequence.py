@@ -2,6 +2,7 @@ import time
 import random 
 import threading 
 import asyncio 
+import sys
 def slowtype(string): 
     for letter in string:
         print(letter, end="", flush=True)
@@ -217,6 +218,7 @@ def aseq(player, monster, classtoname):
         elif player.hp <= 0: 
             slowtype('YOU DIED!')  
             dead = True
+            sys.exit()
             break   
         if md == True: 
             break 

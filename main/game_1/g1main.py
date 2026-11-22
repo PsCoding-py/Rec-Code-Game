@@ -2,6 +2,7 @@ import time
 import random 
 import attacksequence 
 import sys 
+import os
 
 # Functions 
 # 
@@ -109,6 +110,21 @@ class Player:
     def update(self): 
         self.hupdate() 
         self.hupdate()
+    def save(self): 
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        u_path = os.path.join(script_dir, 'usernames.txt')
+        m_path = os.path.join(script_dir, 'milestones.txt')
+        w_path = os.path.join(script_dir, 'pweapon.txt')
+        inv_path = os.path.join(script_dir, 'inventory.txt')
+        with open(m_path, 'w') as mfile: 
+            global mile
+            mfile.write(mile) 
+        with open(w_path, 'w') as wfile: 
+            wfile.write(self.weapon.truename)
+        with open(inv_path, 'w') as invfile:
+            writeinv = self.inventory.join(',') 
+            invfile.write(writeinv)
+
 
 class Monster: 
     def __init__(self, type, weapon): 

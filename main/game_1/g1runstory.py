@@ -57,9 +57,8 @@ def story_run():
         u_m = dict(zip(ulist, mlist))
         u_i = dict(zip(ulist, inlist))
         u_w = dict(zip(ulist, wlist))
-        print(u_m)
         if schoice == 's':
-            username = input('Username: ').lower()
+            username = 'jim'
 
             z = 2
             zombie = Monster('zombie', 'na')  
