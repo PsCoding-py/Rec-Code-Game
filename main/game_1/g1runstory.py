@@ -63,7 +63,8 @@ def story_run():
             z = 2
             zombie = Monster('zombie', 'na')  
             player = Player()
-            player.inventory = u_i[username] 
+            player.inventory = u_i[username]
+            global mile 
             mile = u_m[username] 
             while True:
                 g1smods.mile_1(mile)

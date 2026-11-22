@@ -21,6 +21,20 @@ def add_item(player, item):
         item.amount += 1  
         a = pinv.index(f'') 
         pinv[a] = item.truename
+    else: 
+        don = input('Inventory is Full drop item? [Y] [N]: ').lower()
+        if don =='y':
+            try: 
+                print(player.d_inventory)  
+                print('Choose a Slot') 
+                cdslot = int(input('Slot: ')) - 1
+                cditem = classtoname[player.inventory[cdslot]]  
+                cditem.amount -= 1
+                if cditem.amount == 0: 
+                    player.inventory[cdslot] = f'' 
+                    player.update()  
+            except:
+                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')
 def slowtype(string): 
     for letter in string:
         print(letter, end="", flush=True)
