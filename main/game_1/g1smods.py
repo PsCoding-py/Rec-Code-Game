@@ -54,7 +54,7 @@ def mile_1(mile):
                         slowtype('You found a sword in a chest in the next room!')
                         add_item(player, sword)
                         player.update()
-                        slowtype("You gain a piece of the key to open the gates of Valkor's dungeon")
+                        slowtype("You gain a piece of the key to open the gates of Valk's dungeon")
                         mile = '3'
                         t = 1
                     else: 
@@ -77,3 +77,98 @@ def mile_1(mile):
             slowtype('Its empty eye socket bores into you as if burning through your soul')
             slowtype('Eventually it lets out an almighty scream "Arghhh!", and it charges at you dragging along his sword across the ground')
             attacksequence.aseq(player, valkor, classtoname)
+            mile = '4'
+        elif mile == '4': 
+            player.save(mile)
+            # writing for riddle 
+            # this riddle is placeholder
+            rr = riddleq('I have a bed but I do not sleep, I run but cannot walk \n I have a bank but there is no money in it \n What am I?', 'A river')
+            if rr == 1:
+                # numericl code that says "go left"
+                #they find ahealth potion in a chest
+                add_item(player, health_potion)
+                mile = '5'
+            else: 
+                slowtype('YOU DIED!', 'red')
+                dead = True 
+                sys.exit()
+        elif mile == '5': 
+            player.save(mile)
+            # Writing for player getting attacked
+            attacksequence.aseq(player, witch, classtoname)
+            # writing for player winning
+            mile = '6'
+        elif mile == '6':
+            player.save(mile)
+            # writing for encountering bane of yarra
+            attacksequence.aseq(player, boy, classtoname)
+            keys = 2 
+            # writing for getting key
+            mile = '7' 
+        elif mile == '7':
+            player.save(mile) 
+            # writing for saying yara
+            #writing for getting spell to make ac go up 
+            player.ac += 17 
+            mile == '8'
+        elif mile == '8':
+            player.save(mile)
+            # writing for riddle
+            # this riddle is a placeholder
+            rr = riddleq('I have a bed but I do not sleep, I run but cannot walk \n I have a bank but there is no money in it \n What am I?', 'A river')
+            if rr == 1: 
+                # writing for getting bread 
+                add_item(player, bread)
+                mile = '9'
+            else: 
+                # writing for falling down chute and going back to riddle
+                mile = '4'
+        elif mile == '9': 
+            player.save(mile)
+            c = lor()
+            if c == 'l': 
+                mile = '9-1'
+            elif c == 'r': 
+                mile = '9-2' 
+        elif mile == '9-1': 
+            # writing for going into room
+            c = lor() 
+            if c == 'l': 
+                mile = '9-1-1'
+            if c == 'r': 
+                mile = '9-1-2'
+        elif mile == '9-1-1': 
+            #writing for finding skeleton 
+            attacksequence.aseq(player, skeleton, classtoname)
+            mile = '9-1-10'
+        elif mile == '9-1-2': 
+            #writing for finding chest 
+            add_item(player, esword)
+            mile = '9-1-10'
+        elif mile == '9-1-10':
+            # writing for player finding hp 
+            add_item(player, health_potion)
+            mile = '9-2'
+        elif mile == '9-2':
+            # valk backstory + encounter 
+            attacksequence.aseq(player, valk, classtoname)
+            # writing for finding final piece of key 
+            keys = 3 
+            mile = '10'
+        elif mile == '10': 
+            # writing for finding guard after opening dungeon
+            attacksequence.aseq(player, guard, classtoname) 
+            # writing for getting final piece of key 
+            mile = '11'
+            pass
+        elif mile == '11': 
+            # writing for finding sister 
+            sys.exit()
+        
+
+        
+            
+            
+
+        
+        

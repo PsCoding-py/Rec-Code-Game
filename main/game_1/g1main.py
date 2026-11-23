@@ -19,16 +19,16 @@ def pick_loot(pool):
 # 
 # 
 #     
-wmax = {'stick' : 3 ,'na' : 1, 'sword' : 5, 'fire_sword' : 10} 
-wmin = {'stick' : 1, 'na' : 1, 'sword' : 2, 'fire_sword': 3}
+wmax = {'stick' : 3 ,'na' : 1, 'sword' : 5, 'fire_sword' : 10, 'staff' : 5, 'esword' : 10} 
+wmin = {'stick' : 1, 'na' : 1, 'sword' : 2, 'fire_sword': 3, 'staff' : 1, 'esword' : 5}
 # monster hp dict
-mhp = {'zombie' : 5, 'skeleton' : 6, 'valkor' : 16} 
+mhp = {'zombie' : 5, 'skeleton' : 6, 'valkor' : 16, 'witch' : 20, 'bane_of_yara' : 19, 'valk' : 28, 'guard' : 8} 
 #monster attack points dict 
-mattack = {'zombie' : 2, 'skeleton' : 2, 'valkor' : 2} 
+mattack = {'zombie' : 2, 'skeleton' : 2, 'valkor' : 2, 'witch' : 2, 'bane_of_yara' : 4, 'valk' : 6, 'guard' : 2} 
 #monster display name 
-mdisplay = {'zombie' : 'Zombie', 'skeleton' : 'Skeleton', 'valkor': 'Valkor'}
-mloot = {'zombie' : "health_potion", 'skeleton' : 'sword', 'valkor' : 'health_potion'} 
-mac = {'zombie' : 2, 'skeleton' : 2, 'valkor' : 12} 
+mdisplay = {'zombie' : 'Zombie', 'skeleton' : 'Skeleton', 'valkor': 'Valkor', 'witch' : 'Evil Witch', 'bane_of_yara' : 'Bane Of Yara - Destroyer of Books', 'valk' : 'Valk the Destroyer', 'guard' : 'Prison Guard'}
+mloot = {'zombie' : "health_potion", 'skeleton' : 'sword', 'valkor' : 'shield', 'witch' : 'staff', 'bane_of_yara' : 'fire_sword', 'valk' : 'bread', 'guard' : 'health_potion'} 
+mac = {'zombie' : 2, 'skeleton' : 2, 'valkor' : 12, 'witch' : 13, 'bane_of_yara' : 15, 'valk' : 13, 'guard' : 7} 
 #Classes
 #
 #
@@ -48,6 +48,10 @@ stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=T
 hands = Item(name='hands', amount=1, cons=False, heal=0, truename='na', wep=True)
 sword = Item(name='Sword', amount=1, cons=False, heal=0, truename='sword', wep=True)
 fire_sword = Item(name='Fire Sword', amount=0, cons=False, heal=0, truename='fire_sword', wep=True) 
+shield = Item(name='Shield', amount = 1, cons=False, heal=0, truename='shield', wep=False)
+staff = Item(name='Magic Staff', amount=1, cons=False, heal=0, truename='staff', wep=True)
+bread = Item(name='Bread', amount = 1, cons=True, heal=1, truename='bread', wep=False)
+esword = sword = Item(name='Enchanted Sword', amount=1, cons=False, heal=0, truename='esword', wep=True)
 ###Important###
 # 
 # 
@@ -56,7 +60,7 @@ fire_sword = Item(name='Fire Sword', amount=0, cons=False, heal=0, truename='fir
 # 
 #  
 global classtoname 
-classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword': sword, 'hands' : hands, 'fire_sword' : fire_sword} 
+classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword': sword, 'na' : hands, 'fire_sword' : fire_sword,'shield' : shield, 'staff' : staff, 'bread' : bread,'esword' : esword} 
 #Classes Continue 
 # 
 # 
@@ -88,7 +92,7 @@ class Player:
         #minimum damage is 3 with no weapon
         self.attack = 3 + random.randint(self.amin, self.amax) 
         self.d_inventory = f'Inventory: \n{makeinv(self.inventory)}' 
-        self.ac = 15  
+        self.ac = 13  
         self.name = '' 
     def hupdate(self): 
         self.weapondn = self.weapon.name
@@ -112,6 +116,9 @@ class Player:
             self.hp = self.maxhp
         if self.weapon.amount == 0: 
             self.weapon = hands
+        if shield.name in self.inventory: 
+            self.ac = 15
+            print('SE')
     def update(self): 
         self.hupdate() 
         self.hupdate()
@@ -134,7 +141,9 @@ class Player:
 
 class Monster: 
     def __init__(self, type, weapon): 
-        #display name 
+        #display name
+        weapono = classtoname[weapon]
+        weapondn = weapono.name
         self.d_name = mdisplay[type] 
         self.maxhp = mhp[type] 
         self.hp = mhp[type] 

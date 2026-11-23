@@ -98,15 +98,29 @@ def riddleq(riddle, answer):
 
 #
 #Objects  
+## Player ##
 player = Player()
+## Monsters ##
 zombie = Monster('zombie', 'na')
 skeleton = Monster('skeleton', 'stick')
 valkor = Monster('valkor', 'sword')
-health_potion = Item(name='Health Potion', amount = 1, cons=True, heal=10, truename='health_potion', wep=False) 
+witch = Monster('witch', 'staff')
+boy = Monster('bane_of_yara', 'fire_sword')
+valk = Monster('valk', 'staff')
+guard = Monster('guard', 'sword')
+## Items ##
+## Consumables ##
+health_potion = Item(name='Health Potion', amount = 1, cons=True, heal=10, truename='health_potion', wep=False)
+bread = Item(name='Bread', amount = 1, cons=True, heal=1, truename='bread', wep=False)
+## Armour ##
+shield = Item(name='Shield', amount = 1, cons=False, heal=0, truename='shield', wep=False) 
+## Weapons ##
 stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True)
 hands = Item(name='hands', amount=1, cons=False, heal=0, truename='na', wep=True)
 sword = Item(name='Sword', amount=1, cons=False, heal=0, truename='sword', wep=True)
-fire_sword = Item(name='Fire Sword', amount=0, cons=False, heal=0, truename='fire_sword', wep=True) 
+staff = Item(name='Magic Staff', amount=1, cons=False, heal=0, truename='staff', wep=True)
+fire_sword = Item(name='Fire Sword', amount=1, cons=False, heal=0, truename='fire_sword', wep=True) 
+esword = Item(name='Enchanted Sword', amount=1, cons=False, heal=0, truename='esword', wep=True)
 #Variables
 dead = False
 keys = 0

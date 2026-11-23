@@ -113,7 +113,7 @@ def aseq(player, monster, classtoname):
                 aroll = random.randint(1,20) 
                 if aroll > monster.mac: 
                     z = player.attack 
-                    slowtype(f'You hit the {monster.d_name} and dealt {z} damage', 'red') 
+                    slowtype(f'You hit the {monster.d_name} with your {player.weapondn} and dealt {z} damage', 'red') 
                     monster.hp -= z
                 elif aroll <= monster.mac: 
                     slowtype(f'You missed the {monster.d_name}')
@@ -246,7 +246,7 @@ def aseq(player, monster, classtoname):
             print(GREEN + f"{player.hp}/{player.maxhp}") 
             aroll = random.randint(1,20) 
             if aroll > player.ac: 
-                slowtype(f'The {monster.d_name} hit you and dealt {monster.attack} damage', 'red') 
+                slowtype(f'The {monster.d_name} hit you with their {monster.weapondn} and dealt {monster.attack} damage', 'red') 
                 player.hp -= monster.attack
             elif aroll <= player.ac: 
                 slowtype(f'The {monster.d_name} missed you', 'green') 
@@ -269,7 +269,8 @@ def aseq(player, monster, classtoname):
             sys.exit()
             break   
         if md == True: 
-            break 
+            break
+    monster.hp = monster.maxhp 
     return '' 
         
         
