@@ -70,8 +70,10 @@ def mile_1(mile):
         elif mile == '3':
             player.save(mile)
             slowtype('Upon the door to the next room is a sentence enscribed in blood')
-            slowtype("'A terrible power lies beyond here. Bewarned!'", 'red')
+            slowtype("'A terrible power lies beyond here, Valkor. Bewarned!'", 'red')
             slowtype('You slowly open the door')
             slowtype('As you walk into the dungeon, before you lies a horrid sight!')
             slowtype('It is a monster that looks as if it has been cobbled together out of other monster parts')
+            slowtype('Its empty eye socket bores into you as if burning through your soul')
+            slowtype('Eventually it lets out an almighty scream "Arghhh!", and it charges at you dragging along his sword across the ground')
             attacksequence.aseq(player, valkor, classtoname)

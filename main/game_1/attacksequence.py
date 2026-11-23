@@ -12,8 +12,7 @@ MAGENTA = "\033[35m"
 CYAN = "\033[36m"
 WHITE = "\033[37m"
 
-# Bright / high-intensity colors
-BRIGHT_BLACK = "\033[90m"  # Often appears as gray
+BRIGHT_BLACK = "\033[90m"
 BRIGHT_RED = "\033[91m"
 BRIGHT_GREEN = "\033[92m"
 BRIGHT_YELLOW = "\033[93m"
@@ -34,8 +33,6 @@ colours = {
     "magenta": "\033[35m",
     "cyan": "\033[36m",
     "white": "\033[37m",
-    
-    # Bright / high-intensity colors
     "gray": "\033[90m",
     "bright_red": "\033[91m",
     "bright_green": "\033[92m",
@@ -110,8 +107,7 @@ def aseq(player, monster, classtoname):
             print(GREEN + f"{player.hp}/{player.maxhp}") 
             print(BLUE + f'{player.d_inventory}') 
             print(RESET + f'Player has {player.weapondn} equipped as main weapon') 
-            print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')
-            print('Type [E] to exit any menu')  
+            print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')  
             choice = input('Choice: ').lower()
             if choice == 'a': 
                 aroll = random.randint(1,20) 
