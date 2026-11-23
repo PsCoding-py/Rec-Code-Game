@@ -35,6 +35,7 @@ def story_run():
         u_path = os.path.join(script_dir, 'usernames.txt')
         m_path = os.path.join(script_dir, 'milestones.txt')
         w_path = os.path.join(script_dir, 'pweapon.txt')
+        n_path = os.path.join(script_dir, 'pnames.txt')
         with open(u_path, 'r') as usernames:
             ucontents = usernames.read()
             ulist = ucontents.split(' ')
@@ -52,7 +53,9 @@ def story_run():
                 inlist.append(plist)
         with open(w_path, 'r') as wepf: 
             wcontents = wepf.read()
-            wlist = wcontents.split(' ') 
+            wlist = wcontents.split(' ')
+        with open(n_path, 'r') as nfile: 
+            ncont = nfile.read() 
 
         u_m = dict(zip(ulist, mlist))
         u_i = dict(zip(ulist, inlist))
@@ -64,6 +67,7 @@ def story_run():
             zombie = Monster('zombie', 'na')  
             player = Player()
             player.inventory = u_i[username]
+            player.name = ncont
             global mile 
             mile = u_m[username] 
             while True:

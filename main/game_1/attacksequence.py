@@ -136,7 +136,7 @@ def aseq(player, monster, classtoname):
                             if item.cons == True:   
                                 player.hp += item.heal 
                                 item.amount -= 1 
-                                print(f'You healed {item.heal} damage.', 'green') 
+                                print(GREEN + f'You healed {item.heal} damage.') 
                                 player.update() 
                                 break 
                             else: 
@@ -169,7 +169,6 @@ def aseq(player, monster, classtoname):
                 print('Drop Item [D]') 
                 print('Move Item Slot [M]') 
                 print('Drop All of Item [A]') 
-                print('Replace Item [R]') 
                 cchoice = input('Decision: ').lower() 
                 if cchoice == 'd': 
                     try: 
@@ -275,7 +274,7 @@ def aseq(player, monster, classtoname):
             break   
         if md == True: 
             break 
-    return 'Broken' 
+    return '' 
         
         
                     

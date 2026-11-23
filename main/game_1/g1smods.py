@@ -19,9 +19,14 @@ def mile_1(mile):
     global keys
     while True:
         if mile == '1':
+            script_dir = os.path.dirname(os.path.abspath(__file__))            
+            n_path = os.path.join(script_dir, 'pnames.txt')
             player.save(mile)
             slowtype('Hello Adventurer What is your name?') 
-            player.name = input("Name: ").title() 
+            player.name = input("Name: ").title()
+            with open(n_path, 'w') as nfile: 
+                pnam = player.name
+                nfile.write(pnam) 
             slowtype('You find yourself in a musty dungeon with moss covered walls.') 
             slowtype(f'You remember now, {player.name}, that monster kidnapped your sister. ') 
             slowtype('You must find her!') 
