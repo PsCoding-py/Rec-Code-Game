@@ -3,11 +3,60 @@ import random
 import threading 
 import asyncio 
 import sys
-def slowtype(string): 
+BLACK = "\033[30m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+
+# Bright / high-intensity colors
+BRIGHT_BLACK = "\033[90m"  # Often appears as gray
+BRIGHT_RED = "\033[91m"
+BRIGHT_GREEN = "\033[92m"
+BRIGHT_YELLOW = "\033[93m"
+BRIGHT_BLUE = "\033[94m"
+BRIGHT_MAGENTA = "\033[95m"
+BRIGHT_CYAN = "\033[96m"
+BRIGHT_WHITE = "\033[97m"
+
+# Reset
+RESET = "\033[0m"
+colours = {
+    # Standard colors
+    "black": "\033[30m",
+    "red": "\033[31m",
+    "green": "\033[32m",
+    "yellow": "\033[33m",
+    "blue": "\033[34m",
+    "magenta": "\033[35m",
+    "cyan": "\033[36m",
+    "white": "\033[37m",
+    
+    # Bright / high-intensity colors
+    "gray": "\033[90m",
+    "bright_red": "\033[91m",
+    "bright_green": "\033[92m",
+    "bright_yellow": "\033[93m",
+    "bright_blue": "\033[94m",
+    "bright_magenta": "\033[95m",
+    "bright_cyan": "\033[96m",
+    "bright_white": "\033[97m",
+    
+    # Reset
+    "reset": "\033[0m"
+}
+def slowtype(string, colour=''):
+    if colour != '':
+        colour = colours[colour]
+    else:
+        pass
     for letter in string:
-        print(letter, end="", flush=True)
-        time.sleep(0.1) 
-    print('') 
+        print(colour + letter, end="", flush=True)
+        time.sleep(0.1)
+    print(colours['reset'])
 
      
 def remove_num(string): 
@@ -55,12 +104,12 @@ def aseq(player, monster, classtoname):
         global choice, slot 
         #player turn
         while True:  
-            slowtype(f'{player.name} vs. {monster.d_name}')
+            slowtype(f'{player.name} vs. {monster.d_name}', '')
             slowtype(f"{player.name}'s Turn") 
-            print(f"{monster.hp}/{monster.maxhp}")
-            print(f"{player.hp}/{player.maxhp}") 
-            print(f'{player.d_inventory}') 
-            print(f'Player has {player.weapondn} equipped as main weapon') 
+            print(RED + f"{monster.hp}/{monster.maxhp}")
+            print(GREEN + f"{player.hp}/{player.maxhp}") 
+            print(BLUE + f'{player.d_inventory}') 
+            print(RESET + f'Player has {player.weapondn} equipped as main weapon') 
             print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')
             print('Type [E] to exit any menu')  
             choice = input('Choice: ').lower()
@@ -68,7 +117,7 @@ def aseq(player, monster, classtoname):
                 aroll = random.randint(1,20) 
                 if aroll > monster.mac: 
                     z = player.attack 
-                    slowtype(f'You hit the {monster.d_name} and dealt {z} damage') 
+                    slowtype(f'You hit the {monster.d_name} and dealt {z} damage', 'red') 
                     monster.hp -= z
                 elif aroll <= monster.mac: 
                     slowtype(f'You missed the {monster.d_name}')
@@ -87,14 +136,14 @@ def aseq(player, monster, classtoname):
                             if item.cons == True:   
                                 player.hp += item.heal 
                                 item.amount -= 1 
-                                print(f'You healed {item.heal} damage.') 
+                                print(f'You healed {item.heal} damage.', 'green') 
                                 player.update() 
                                 break 
                             else: 
                                 print('This item is not consumeable') 
                          
                     except: 
-                        print('Please enter a valid value (1-7), if you have an error has occured') 
+                        print(RED + 'Please enter a valid value (1-7), if you have an error has occured') 
                 break
             if choice == 'w':
                  
@@ -103,15 +152,18 @@ def aseq(player, monster, classtoname):
                 try:
                     choslot = int(input('Choose a slot: ')) 
                     pinv = player.inventory 
-                    witem = pinv[choslot] 
+                    witem = pinv[choslot - 1]
+                    witem = classtoname[witem] 
                     if witem.wep == True: 
-                        player.weapon = classtoname[witem] 
+                        player.weapon = witem
+                        player.update() 
                         break 
+
                     else: 
                         print('That item is not equippable as a weapon')
                      
                 except: 
-                    print('Please enter a valid slot number (1-7), if you have an error has occured') 
+                    print(RED + 'Please enter a valid slot number (1-7), if you have an error has occured') 
             if choice == 'c':
                 print('Change inventory: ') 
                 print('Drop Item [D]') 
@@ -132,7 +184,7 @@ def aseq(player, monster, classtoname):
                         break  
 
                     except:
-                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
+                        print(RED + 'Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
                 if cchoice == 'a': 
                     try: 
                         print(player.d_inventory) 
@@ -146,7 +198,7 @@ def aseq(player, monster, classtoname):
                         break  
 
                     except:
-                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
+                        print(RED + 'Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.') 
                 if cchoice == 'm': 
                     try: 
                         print(player.d_inventory) 
@@ -167,17 +219,17 @@ def aseq(player, monster, classtoname):
 
 
                     except:
-                        print('Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')
+                        print(RED + 'Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')
             else: 
-                print('You have entered an invalid ')  
+                print(RED + 'You have entered an invalid ')  
 
                 
 
         #monster turn() 
         if monster.hp <= 0: 
             md = True 
-            slowtype(f"You have defeated the {monster.d_name}") 
-            slowtype(f"You got a {monster.mloot.name}") 
+            slowtype(f"You have defeated the {monster.d_name}", 'green') 
+            slowtype(f"You got a {monster.mloot.name}", 'reset') 
             loot = monster.mloot 
             add_item(player, loot) 
             player.update() 
@@ -187,21 +239,22 @@ def aseq(player, monster, classtoname):
             break 
             
         elif player.hp <= 0: 
-            slowtype('YOU DIED!') 
+            slowtype('YOU DIED!', 'red') 
             global dead 
             dead = True
+            sys.exit()
             break
         while True: 
             slowtype(f'{monster.d_name} vs. {player.name}')
-            slowtype(f"{monster.d_name}'s Turn") 
-            print(f"{monster.hp}/{monster.maxhp}")
-            print(f"{player.hp}/{player.maxhp}") 
+            slowtype(f"{monster.d_name}'s Turn", 'red') 
+            print(RED + f"{monster.hp}/{monster.maxhp}")
+            print(GREEN + f"{player.hp}/{player.maxhp}") 
             aroll = random.randint(1,20) 
             if aroll > player.ac: 
-                slowtype(f'The {monster.d_name} hit you and dealt {monster.attack} damage') 
+                slowtype(f'The {monster.d_name} hit you and dealt {monster.attack} damage', 'red') 
                 player.hp -= monster.attack
             elif aroll <= player.ac: 
-                slowtype(f'The {monster.d_name} missed you') 
+                slowtype(f'The {monster.d_name} missed you', 'green') 
             break 
         #check if player or zombie is dead
         if monster.hp <= 0: 
@@ -216,7 +269,7 @@ def aseq(player, monster, classtoname):
             break 
             
         elif player.hp <= 0: 
-            slowtype('YOU DIED!')  
+            slowtype('YOU DIED!', 'red')  
             dead = True
             sys.exit()
             break   

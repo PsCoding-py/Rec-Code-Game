@@ -19,16 +19,16 @@ def pick_loot(pool):
 # 
 # 
 #     
-wmax = {'stick' : 3 ,'na' : 1, 'sword' : 5} 
-wmin = {'stick' : 1, 'na' : 1, 'sword' : 2}
+wmax = {'stick' : 3 ,'na' : 1, 'sword' : 5, 'fire_sword' : 10} 
+wmin = {'stick' : 1, 'na' : 1, 'sword' : 2, 'fire_sword': 3}
 # monster hp dict
-mhp = {'zombie' : 5, 'skeleton' : 6} 
+mhp = {'zombie' : 5, 'skeleton' : 6, 'valkor' : 16} 
 #monster attack points dict 
-mattack = {'zombie' : 2, 'skeleton' : 2} 
+mattack = {'zombie' : 2, 'skeleton' : 2, 'valkor' : 2} 
 #monster display name 
-mdisplay = {'zombie' : 'Zombie', 'skeleton' : 'Skeleton'}
-mloot = {'zombie' : "health_potion", 'skeleton' : 'sword'} 
-mac = {'zombie' : 2, 'skeleton' : 2} 
+mdisplay = {'zombie' : 'Zombie', 'skeleton' : 'Skeleton', 'valkor': 'Valkor'}
+mloot = {'zombie' : "health_potion", 'skeleton' : 'sword', 'valkor' : 'health_potion'} 
+mac = {'zombie' : 2, 'skeleton' : 2, 'valkor' : 12} 
 #Classes
 #
 #
@@ -43,10 +43,11 @@ class Item:
         self.truename = truename 
         self.wep = wep
 #Define Items
-health_potion = Item(name='Health Potion', amount = 0, cons=True, heal=10, truename='health_potion', wep=False) 
+health_potion = Item(name='Health Potion', amount = 1, cons=True, heal=10, truename='health_potion', wep=False) 
 stick = Item(name='Stick', amount=1, cons=False, heal=0, truename='stick', wep=True)
-hands = Item(name='hands', amount=0, cons=False, heal=0, truename='na', wep=True)
-sword = Item(name='Sword', amount=0, cons=False, heal=0, truename='sword', wep=True) 
+hands = Item(name='hands', amount=1, cons=False, heal=0, truename='na', wep=True)
+sword = Item(name='Sword', amount=1, cons=False, heal=0, truename='sword', wep=True)
+fire_sword = Item(name='Fire Sword', amount=0, cons=False, heal=0, truename='fire_sword', wep=True) 
 ###Important###
 # 
 # 
@@ -55,7 +56,7 @@ sword = Item(name='Sword', amount=0, cons=False, heal=0, truename='sword', wep=T
 # 
 #  
 global classtoname 
-classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword': sword} 
+classtoname = {'health_potion': health_potion, 'stick' : stick, 'sword': sword, 'hands' : hands, 'fire_sword' : fire_sword} 
 #Classes Continue 
 # 
 # 
@@ -65,7 +66,10 @@ def makeinv(list):
     printing = ''
     for item in list:
         if item != '': 
-            printing += f'[{classtoname[item].name} - {classtoname[item].amount}],' 
+            itemo = classtoname[item]
+            itemn = itemo.name 
+            itema = itemo.amount
+            printing += f'[{itemn} - {itema}],' 
         else: 
             printing += f'[ ]' 
     return printing
@@ -93,14 +97,15 @@ class Player:
         #attick maximum of weapon for random
         self.amax = wmax[self.weaponn] 
         #minimum damage is 3 with no weapon
-        self.attack = 3 + random.randint(self.amin, self.amax) 
-        self.d_inventory = f'Inventory: \n{makeinv(self.inventory)}' 
-        self.ac = 15
+        self.attack = 3 + random.randint(self.amin, self.amax)
+        inv = self.inventory 
+        self.d_inventory = f'Inventory: \n{makeinv(inv)}' 
         for item in self.inventory:
-            if item != f'':
-                obj = classtoname[item] 
-                if obj.amount <= 0: 
-                    classtoname[item] = f''
+            if item != '':
+                obj = classtoname[item]
+                itemsl = self.inventory.index(item)
+                if obj.amount <= 0:
+                    self.inventory[itemsl] = ''
             else: 
                 pass 
         if self.hp > self.maxhp: 

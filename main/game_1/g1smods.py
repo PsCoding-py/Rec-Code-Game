@@ -27,7 +27,7 @@ def mile_1(mile):
             slowtype('You must find her!') 
             input('Press [Enter] to continue') 
             print('\n'*30)
-            slowtype('Alas a zombie has appeared!')
+            slowtype('Alas a zombie has appeared!', 'red')
                         
             print(attacksequence.aseq(player, zombie, classtoname)) 
             mile = '2'
@@ -44,8 +44,11 @@ def mile_1(mile):
                     rr = riddleq('I have a bed but I do not sleep, I run but cannot walk \n I have a bank but there is no money in it \n What am I?', 'A river')
                     if rr == 1: 
                         add_item(player, health_potion)
+                        player.update()
                         keys += 1
                         slowtype('You found a sword in a chest in the next room!')
+                        add_item(player, sword)
+                        player.update()
                         slowtype("You gain a piece of the key to open the gates of Valkor's dungeon")
                         mile = '3'
                         t = 1
@@ -56,8 +59,14 @@ def mile_1(mile):
                     slowtype('You turn the corner and a skeleton faces you')
                     attacksequence.aseq(player, skeleton, classtoname)
                     keys += 1
-                    slowtype("You gain a piece of the key to open the gates of Valkor's dungeon")
+                    slowtype("You gain a piece of the key to open the gates of Valk's dungeon")
                     mile = '3'
                     t = 1
         elif mile == '3':
-            return mile  # Exits the while True loop and passes mile = '3' back to g1runstory.py
+            player.save(mile)
+            slowtype('Upon the door to the next room is a sentence enscribed in blood')
+            slowtype("'A terrible power lies beyond here. Bewarned!'", 'red')
+            slowtype('You slowly open the door')
+            slowtype('As you walk into the dungeon, before you lies a horrid sight!')
+            slowtype('It is a monster that looks as if it has been cobbled together out of other monster parts')
+            attacksequence.aseq(player, valkor, classtoname)
