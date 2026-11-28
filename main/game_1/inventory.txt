@@ -1,1 +1,1 @@
-stick,,,,,,
+stick,esword,health_potion,,,,

@@ -3,11 +3,8 @@ import random
 import attacksequence 
 import sys
 import g1smods 
-import g1main  
-from g1main import Monster 
-from g1main import Player 
-from g1main import Item  
-from g1main import classtoname
+from registry import *  
+
 import threading 
 import asyncio 
 import os
@@ -26,7 +23,7 @@ def player_ticker(player_obj):
         time.sleep(0.05)
 def story_run(): 
     while True: 
-        slowtype('Start Game [S] \nExit Game [E]') 
+        slowtype('Start Game [S] \nExit Game [E] \nReset Save File [R]') 
         schoice = input('Choice: ').lower() 
         dead = False
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -62,15 +59,13 @@ def story_run():
         u_w = dict(zip(ulist, wlist))
         if schoice == 's':
             username = 'jim'
-
             z = 2
             zombie = Monster('zombie', 'na')  
-            player = Player()
             player.inventory = u_i[username]
-            player.name = ncont
             global mile 
             mile = u_m[username] 
             while True:
+                player.name = ncont
                 g1smods.mile_1(mile)
                 break
                  
@@ -81,6 +76,15 @@ def story_run():
                 
 
         if schoice == "e": 
+        
             sys.exit() 
+        if schoice == 'r':
+            with open(m_path, 'w') as mfile: 
+                mfile.write('1')
+            with open(w_path, 'w') as wfile: 
+                wfile.write('stick')
+            with open(inv_path, 'w') as ifile: 
+                ifile.write('stick,,,,,,')
+            
 
 story_run()

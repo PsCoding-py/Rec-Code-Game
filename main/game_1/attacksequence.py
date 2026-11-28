@@ -3,6 +3,7 @@ import random
 import threading 
 import asyncio 
 import sys
+from registry import *
 BLACK = "\033[30m"
 RED = "\033[31m"
 GREEN = "\033[32m"
@@ -75,7 +76,7 @@ def add_item(player, item):
     if item.truename in pinv: 
         item.amount += 1 
     elif f'' in pinv: 
-        item.amount += 1  
+        item.amount = 1  
         a = pinv.index(f'') 
         pinv[a] = item.truename 
     else: 
@@ -109,15 +110,30 @@ def aseq(player, monster, classtoname):
             print(RESET + f'Player has {player.weapondn} equipped as main weapon') 
             print('Change inventory [C] \nAttack [A] \nUse Item [H] \nChange Weapon [W]')  
             choice = input('Choice: ').lower()
-            if choice == 'a': 
-                aroll = random.randint(1,20) 
-                if aroll > monster.mac: 
-                    z = player.attack 
-                    slowtype(f'You hit the {monster.d_name} with your {player.weapondn} and dealt {z} damage', 'red') 
-                    monster.hp -= z
-                elif aroll <= monster.mac: 
-                    slowtype(f'You missed the {monster.d_name}')
-                break 
+            if choice == 'a':
+                while True:
+                    print('What move would you like to use')
+                    print(player.dmoves)
+                    mo = int(input('Move Slot: ')) - 1
+                    mo = player.lmoves[mo]
+                    if mo.available == True:
+                        mo.activate(turn) 
+                        aroll = random.randint(1,20) 
+                        if aroll > monster.mac: 
+                            z = player.attack + mo.plusattack 
+                            slowtype(f'You hit the {monster.d_name} with your {player.weapondn} and dealt {z} damage', 'red') 
+                            monster.hp -= z
+                            break
+                        elif aroll <= monster.mac: 
+                            slowtype(f'You missed the {monster.d_name}')
+                            break
+                            
+                    else:
+                        print('This move is unavailable') 
+                break
+
+                     
+ 
             if choice == 'h': 
                 while True:  
                     try:
@@ -153,7 +169,8 @@ def aseq(player, monster, classtoname):
                     if witem.wep == True: 
                         player.weapon = witem
                         player.update() 
-                        break 
+                        break
+                    
 
                     else: 
                         print('That item is not equippable as a weapon')
@@ -216,11 +233,14 @@ def aseq(player, monster, classtoname):
                     except:
                         print(RED + 'Please enter a valid slot number (1-7), if you have entered a valid number an error has occured.')
             else: 
-                print(RED + 'You have entered an invalid ')  
+                print(RED + 'You have entered an invalid ')
+
+        turn += 1
+        player.update()  
 
                 
 
-        #monster turn() 
+        #monster turn 
         if monster.hp <= 0: 
             md = True 
             slowtype(f"You have defeated the {monster.d_name}", 'green') 
